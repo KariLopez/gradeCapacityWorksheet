@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="gradeCapacities.json"></script>
+    <script type="text/javascript" src="schoolCapacity.json"></script>
+    <script src="optionSets.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <button>Save</button>
+    <button>View School EnrollmentCapacity</button>
+    <div class="content">
+        <header>
+            <h1><span class="schoolName"> </span> Grade Level Capacities</h1>
+            <h2 id="status">Status: <span class="statusReason"></span></h2>
+        </header>
+        <section class="schoolCapacity">
+            <form id=schoolCapacitySelection>
+                <!--alphabetical order-->
+                <select id="school" name="School" onChange="UpdatedSelectedSchool()"></select>
+                <!--active only and in order select current as default-->
+                <select id="academicYear" name="Academic Year" onChange="UpdatedSelectedYear()"></select>
+                <!--status progression?-->
+                <select id="statusReason" name="Status Reason"></select>
+            </form>
+            <form>
+                <label for="nha_instructionroomsavailable">Total Rooms available for instuction</label>
+                <input type="text" id="nha_instructionroomsavailable">
+                <label for="nha_enrollmentmaximum">Enrollment Max</label>
+                <input type="text" id="nha_enrollmentmaximum">
+            </form>
+           <section id="schoolCapacityReadOnly">
+               <div id="nha_roomtotal"></div>
+               <div id="nha_enrollmentgoalstotal"></div>
+               <div id="nha_expectedcapacitytotal"></div>
+               <div id="nha_percentageexpected"></div>
+            </section>
+            <section id="schoolCapacityReadOnlyLabels">
+                <div id="roomTotal">Room Total</div>
+                <div id="enrollmentGoal">Enrollment Goal total</div>
+                <div id="expectedCapacity"> Expected Capacity Total</div>
+                <div id="percentExpected">% Expected</div>
+            </section>
+        </section>
+        <section class="gradeCapacities">
+            <table class="gradeCapacityTable">
+                <thead>
+                    <tr class=tableHeaderRow>
+                        <th>Grade</th>
+                        <th> <span class="priorYear"></span> Rooms</th>
+                        <!--editable-->
+                        <th><span class="currentYear"></span> Room Difference</th>
+                        <!--dependent on room different-->
+                        <th><span class="currentYear"></span> Rooms</th>
+                        <!--editable-->
+                        <th><span class="priorYear"></span> Offered Capacities</th>
+                        <th><span class="priorYear"></span> Count Day Students</th>
+                        <th><span class="currentYear"></span> New Students Needed</th>
+                        <th><span class="currentYear"></span> Offered Capacities</th>
+                        <th><span class="currentYear"></span> Students per Room</th>
+                        <th><span class="currentYear"></span> Expected Capacites</th>
+                        <th><span class="currentYear"></span> Enrollment Goals</th>
+                    </tr>
+                </thead>
+                <tbody class="gradeRows"></tbody>
+            </table>
+        </section>
+        <section id="notes">
+            <!--fill in once we have sec-->
+        </section>
+        <!--<form id="submitForm" class="hidden">
+            <section class="validate">
+                <label for="approvedCheck" id="approve">
+                    Approve
+                    <input type="radio" name="approve" value="approve" id="approvedCheck" onclick="userDecision('approve')" hidden></input>
+                </label>
+                <label for="rejectedCheck" id="reject">
+                    Reject
+                    <input type="radio" name="reject" value="reject" id="rejectedCheck" onclick="userDecision('reject')" hidden></input>
+                </label>
+            </section>
+            <section class="userText"><textarea id="userNotes" name="notes" form="submitForm"></textarea></section>
+            <section class="submit">
+                <input class="btn btn-primary" type="submit" onclick="userSubmit(event)" value="Submit this form">
+            </section>
+        </form>-->
+        <!--<script src="~/Scripts/script.js"></script>-->
+    </div>
+</body>
+</html>

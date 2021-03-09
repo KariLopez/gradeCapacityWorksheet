@@ -1,0 +1,68 @@
+gradeCapacities=
+[
+    {
+        "nha_gradelevelcapacityid": "87a318d3-6557-eb11-a812-000d3a3479c5",
+        "nha_name": "1st Grade",
+        "nha_studentsperroom": 30,
+        "nha_rooms": 4,
+        "nha_roomdifference": 0,
+        "nha_offeredcapacity": 140,
+        "nha_newstudentsneeded": 10,
+        "nha_expectedcapacity": 142,
+        "nha_enrollmentgoals": 140,
+        "nha_grade": 2,
+        "nha_schoolenrollmentcapacity": "5cd9c85d-d756-eb11-a812-000d3a3479c5"
+    },
+    {
+        "nha_gradelevelcapacityid": "489007d8-6a57-eb11-a812-000d3a3479c5",
+        "nha_name": "first",
+        "nha_studentsperroom": 30,
+        "nha_rooms": 4,
+        "nha_roomdifference": 0,
+        "nha_offeredcapacity": 150,
+        "nha_newstudentsneeded": 5,
+        "nha_expectedcapacity": 150,
+        "nha_enrollmentgoals": 180,
+        "nha_grade": 2,
+        "nha_schoolenrollmentcapacity": "f06fec29-c052-eb11-a812-000d3a58f033"
+    },
+    {
+        "nha_gradelevelcapacityid": "37f99299-6a57-eb11-a812-000d3a3479c5",
+        "nha_name": "Kinder",
+        "nha_studentsperroom": 25,
+        "nha_rooms": 4,
+        "nha_roomdifference": 0,
+        "nha_offeredcapacity": 150,
+        "nha_newstudentsneeded": 149,
+        "nha_expectedcapacity": 150,
+        "nha_enrollmentgoals": 150,
+        "nha_grade": 1,
+        "nha_schoolenrollmentcapacity": "f06fec29-c052-eb11-a812-000d3a58f033"
+    },
+    {
+        "nha_gradelevelcapacityid": "c3d43265-6557-eb11-a812-000d3a3479c5",
+        "nha_name": "Kindergarten",
+        "nha_studentsperroom": 25,
+        "nha_rooms": 4,
+        "nha_roomdifference": 0,
+        "nha_offeredcapacity": 150,
+        "nha_newstudentsneeded": 150,
+        "nha_expectedcapacity": 200,
+        "nha_enrollmentgoals": 150,
+        "nha_grade": 1,
+        "nha_schoolenrollmentcapacity": "5cd9c85d-d756-eb11-a812-000d3a3479c5"
+    },
+    {
+        "nha_gradelevelcapacityid": "d7df87f6-6a57-eb11-a812-000d3a3479c5",
+        "nha_name": "second",
+        "nha_studentsperroom": 30,
+        "nha_rooms": 4,
+        "nha_roomdifference": 0,
+        "nha_offeredcapacity": 153,
+        "nha_newstudentsneeded": 3,
+        "nha_expectedcapacity": 153,
+        "nha_enrollmentgoals": 168,
+        "nha_grade": 3,
+        "nha_schoolenrollmentcapacity": "f06fec29-c052-eb11-a812-000d3a58f033"
+    }
+]

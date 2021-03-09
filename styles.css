@@ -1,0 +1,90 @@
+header{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+}
+label{
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    margin:5px;
+}
+.body{
+    margin:4px;
+}
+.checkedBox{
+    box-shadow: 4px 4px 20px grey;
+}
+.content{
+    margin: 100px;
+}
+.gradeCapacityTable{
+      margin: 30px;
+      text-align: center;
+  }
+.hidden{
+    display:none;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.submitForm{
+    text-align: center;
+}
+.tableHeaderRow{
+    border-bottom-width: 4px;
+}
+tableHeaderRow>th{
+    padding:20px;
+}
+.rowBody{
+    border-bottom-width: 1px;
+}
+.validate{
+    display: flex;
+    justify-content: center;
+}
+.userText{
+    display: flex;
+    justify-content: center;
+}
+#approve{
+    color: white;
+    border-color: #218838;
+    background-color:#218838 ;
+}
+#schoolCapacityReadOnly{
+    display: flex;
+}
+#schoolCapacityReadOnlyLabels{
+    display: flex;
+}
+#notes{
+    display: flex;
+}
+#reject{
+    color: white;
+    border-color: #23272B;
+    background-color:#23272B;
+
+}
+#userNotes{
+    margin: 5px;
+    height: 150px;
+    flex-grow: 3;
+}
+:required{
+    box-shadow: 4px 4px 20px rgba(200, 0, 0, 0.85);
+}

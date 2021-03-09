@@ -18,6 +18,9 @@ label{
     border-radius: .25rem;
     margin:5px;
 }
+td[contenteditable]{
+    border: 4px dotted blue;
+}
 .body{
     margin:4px;
 }
@@ -68,8 +71,14 @@ tableHeaderRow>th{
 #schoolCapacityReadOnly{
     display: flex;
 }
+#schoolCapacityReadOnly>div{
+    padding: 4px; 
+}
 #schoolCapacityReadOnlyLabels{
     display: flex;
+}
+#schoolCapacityReadOnlyLabels>div{
+    padding:4px;
 }
 #notes{
     display: flex;

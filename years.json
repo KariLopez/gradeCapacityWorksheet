@@ -1,0 +1,10 @@
+years=[
+{"@odata.etag":"W/\"8599902\"","statecode":0,"nha_value":2020,"statuscode":126990001,"nha_academicyearid":"cc82fe85-5c10-e911-a94b-000d3a36ed4e","nha_name":"2019-2020"},
+{"@odata.etag":"W/\"891671\"","statecode":0,"nha_value":2013,"statuscode":126990003,"nha_academicyearid":"c200d5e9-84ca-e511-80e2-6c3be5a8a258","nha_name":"2012-2013"},
+{"@odata.etag":"W/\"1767035\"","statecode":0,"nha_value":2014,"statuscode":126990003,"nha_academicyearid":"acaba81f-17c5-e511-80de-6c3be5a8dad0","nha_name":"2013-2014"},
+{"@odata.etag":"W/\"8599900\"","statecode":0,"nha_value":2015,"statuscode":126990003,"nha_academicyearid":"c4261826-17c5-e511-80de-6c3be5a8dad0","nha_name":"2014-2015"},
+{"@odata.etag":"W/\"8599899\"","statecode":0,"nha_value":2016,"statuscode":126990003,"nha_academicyearid":"ea39012d-17c5-e511-80de-6c3be5a8dad0","nha_name":"2015-2016"},
+{"@odata.etag":"W/\"8599898\"","statecode":0,"nha_value":2017,"statuscode":126990002,"nha_academicyearid":"f139012d-17c5-e511-80de-6c3be5a8dad0","nha_name":"2016-2017"},
+{"@odata.etag":"W/\"8599897\"","statecode":0,"nha_value":2018,"statuscode":1,"nha_academicyearid":"e8f70533-17c5-e511-80de-6c3be5a8dad0","nha_name":"2017-2018"},
+{"@odata.etag":"W/\"8599901\"","statecode":0,"nha_value":2019,"statuscode":126990000,"nha_academicyearid":"7c3cb03a-17c5-e511-80de-6c3be5a8dad0","nha_name":"2018-2019"}
+]

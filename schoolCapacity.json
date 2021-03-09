@@ -6,5 +6,11 @@ schoolCapacity=  {
     "statuscode": 126990007,
     "yearValue": 2020,
     "yearName": "2020-21",
-    "schoolName": "Paramount"
+    "schoolName": "Paramount",
+    "nha_enrollmentmaximum":"650",
+    "nha_instructionroomsavailable":"38",
+    "nha_roomtotal":"42",
+    "nha_enrollmentgoalstotal":"650",
+    "nha_expectedcapacitytotal":"640",
+    "nha_percentageexpected":"98"
 }

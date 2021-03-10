@@ -95,27 +95,17 @@ function FillYearChoices(data){
        
     });
     UpdatedSelectedYear();
-    UpdateYearColumns();
+    //UpdateYearColumns();
 }
 function UpdateSchoolCapacityValues(data){
-    debugger; 
     //update fields
    // if(data[0].value.count==1){}
 
-   let sec = data;
-
-    schoolid= sec.nha_school;
-    schoolName = sec.schoolName;
+    let sec = data;
 
     statusReason= sec.statuscode;
     currentSchoolCapacity= sec.nha_schoolenrollmentcapacityid; 
-
-    UpdateSchoolInfo();
     UpdateStatus();
-
-        
-        //schoolCapacity = sec;
-       // currentSchoolCapacity = sec.nha_schoolenrollmentcapacityid;
 
         $('#nha_enrollmentmaximum').val(sec.nha_enrollmentmaximum);
         $('#nha_instructionroomsavailable').val(sec.nha_instructionroomsavailable);
@@ -126,7 +116,6 @@ function UpdateSchoolCapacityValues(data){
         $('#nha_expectedcapacitytotal').append(sec.nha_expectedcapacitytotal);
         $('#nha_percentageexpected').append( sec.nha_percentageexpected); 
     
-        //UpdateLookupFields();
         GetLastYearCapacity();
     //}
    
@@ -195,11 +184,11 @@ function SetSchool(){
 }
 
 function UpdateYearColumns(){
-    $('.priorYear').append(pastYear);
-    $('.currentYear').append(currentYear); 
+    $('.priorYear').html(pastYear);
+    $('.currentYear').html(currentYear); 
 }
 function UpdateSchoolInfo(){
-    $('.schoolName').append(schoolName);
+    $('.schoolName').html(schoolName);
 }
 function UpdateStatus(){
     //looks against values in optionSets.js

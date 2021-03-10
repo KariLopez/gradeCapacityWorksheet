@@ -37,7 +37,9 @@ td[contenteditable]{
 .hidden{
     display:none;
 }
-
+.rowBody{
+    border-bottom-width: 1px;
+}
 .submit{
     display: flex;
     justify-content: center;
@@ -52,14 +54,11 @@ td[contenteditable]{
 tableHeaderRow>th{
     padding:20px;
 }
-.rowBody{
-    border-bottom-width: 1px;
-}
-.validate{
+.userText{
     display: flex;
     justify-content: center;
 }
-.userText{
+.validate{
     display: flex;
     justify-content: center;
 }
@@ -70,12 +69,14 @@ tableHeaderRow>th{
 }
 #schoolCapacityReadOnly{
     display: flex;
+    justify-content: space-around;
 }
 #schoolCapacityReadOnly>div{
     padding: 4px; 
 }
 #schoolCapacityReadOnlyLabels{
     display: flex;
+    justify-content: space-around;
 }
 #schoolCapacityReadOnlyLabels>div{
     padding:4px;

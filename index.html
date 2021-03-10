@@ -18,8 +18,8 @@
     <script src="script.js"></script>
 </head>
 <body>
-    <button onClick="userSubmit()">Save</button>
-    <button onClick="openSEC()">View School EnrollmentCapacity</button>
+    <button type="button" class="btn btn-outline-success" onClick="userSubmit()">Save</button>
+    <button type="button" class="btn btn-outline-info" onClick="openSEC()">View School EnrollmentCapacity</button>
     <div class="content">
         <header>
             <h1><span class="schoolName"> </span> Grade Level Capacities</h1>
@@ -32,12 +32,14 @@
                 <!--status progression?-->
                 <select id="statusReason" name="Status Reason"></select>
             </form>
+          
             <form>
                 <label for="nha_instructionroomsavailable">Total Rooms available for instuction</label>
                 <input type="text" id="nha_instructionroomsavailable">
                 <label for="nha_enrollmentmaximum">Enrollment Max</label>
                 <input type="text" id="nha_enrollmentmaximum">
             </form>
+            <div class="readOnly">
            <section id="schoolCapacityReadOnly">
                <div id="nha_roomtotal"></div>
                <div id="nha_enrollmentgoalstotal"></div>
@@ -50,6 +52,7 @@
                 <div id="expectedCapacity"> Expected Capacity Total</div>
                 <div id="percentExpected">% Expected</div>
             </section>
+        </div>
         </section>
         <section class="gradeCapacities">
             <table class="gradeCapacityTable">

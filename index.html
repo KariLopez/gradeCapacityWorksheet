@@ -14,6 +14,7 @@
     <script type="text/javascript" src="schoolCapacity.json"></script>
     <script type="text/javascript" src="schools.json"></script>
     <script type="text/javascript" src="years.json"></script>
+    <script type="text/javascript" src="notes.json"></script>
     <script src="optionSets.js"></script>
     <script src="script.js"></script>
 </head>
@@ -60,11 +61,8 @@
                     <tr class=tableHeaderRow>
                         <th>Grade</th>
                         <th> <span class="priorYear"></span> Rooms</th>
-                        <!--editable-->
                         <th><span class="currentYear"></span> Room Difference</th>
-                        <!--dependent on room different-->
                         <th><span class="currentYear"></span> Rooms</th>
-                        <!--editable-->
                         <th><span class="priorYear"></span> Offered Capacities</th>
                         <th><span class="priorYear"></span> Count Day Students</th>
                         <th><span class="currentYear"></span> New Students Needed</th>
@@ -78,25 +76,7 @@
             </table>
         </section>
         <section id="notes">
-            <!--fill in once we have sec-->
         </section>
-        <!--<form id="submitForm" class="hidden">
-            <section class="validate">
-                <label for="approvedCheck" id="approve">
-                    Approve
-                    <input type="radio" name="approve" value="approve" id="approvedCheck" onclick="userDecision('approve')" hidden></input>
-                </label>
-                <label for="rejectedCheck" id="reject">
-                    Reject
-                    <input type="radio" name="reject" value="reject" id="rejectedCheck" onclick="userDecision('reject')" hidden></input>
-                </label>
-            </section>
-            <section class="userText"><textarea id="userNotes" name="notes" form="submitForm"></textarea></section>
-            <section class="submit">
-                <input class="btn btn-primary" type="submit" onclick="userSubmit(event)" value="Submit this form">
-            </section>
-        </form>-->
-        <!--<script src="~/Scripts/script.js"></script>-->
     </div>
 </body>
 </html>

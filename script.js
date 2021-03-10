@@ -1,28 +1,36 @@
 let schoolid;
+let schoolName;
 let yearid;
+let pastYear;
+let currentYear;
 let currentSchoolCapacity; 
 let lastSchoolCapacity;
 let statusReason;
-let pastYear;
-let currentYear;
-let schoolName;
-
 
 $(document).ready(function (){
+
 
     GetSchools(schools);
     GetAcademicYears(years);
 
+    //production
+    //GetSelectedCapacity();
+
      //testing
-     GetSelectedCapacity(schoolCapacity);
+     GetSelectedCapacity(schoolCapacity,notes);
      lastSchoolCapacity="5cd9c85d-d756-eb11-a812-000d3a3479c5";
      DisplayProposedCapacities(gradeCapacities);
 
     //listen for room difference changes 
-    var td = document.getElementById('roomDiff');
-    td.addEventListener('input', function(){
-        UpdateRoom(td);
-    });
+    var tdElements = document.getElementsByClassName('roomDiff');
+    for(var i=0; i<tdElements.length;i++){
+        tdElements[i].addEventListener('input',function(e){
+            UpdateRoom(e);
+        })
+    }
+
+   
+ 
 });
 function GetSchools(schools){
     let schoolData;
@@ -48,7 +56,7 @@ function GetAcademicYears(years){
    
 
 }
-function GetSelectedCapacity(schoolCapacity){
+function GetSelectedCapacity(schoolCapacity,notes){
     if(schoolCapacity==null||undefined){
         fetch('/api/data/v9.2/nha_schoolenrollmentcapacities?$select=nha_schoolenrollmentcapacityid,nha_name,statuscode,nha_roomtotal,nha_percentageexpected,nha_instructionroomsavailable,nha_expectedcapacitytotal,nha_enrollmentmaximum,nha_enrollmentgoalstotal&$filter=(_nha_school_value eq '+schoolid+' and _nha_academicyear_value eq '+yearid +')&$orderby=nha_name asc').then(response=>response.json()).then(data=>{
             //update schoolcapacityvalues
@@ -59,18 +67,22 @@ function GetSelectedCapacity(schoolCapacity){
     else{
 
         UpdateSchoolCapacityValues(schoolCapacity);
-        GetNotes();
+        GetNotes(notes);
        
-    }
-   
-    
+    } 
 }
-function GetNotes(){
-    //uses currentSchoolCapacity
-    fetch('/api/data/v9.2/nha_schoolenrollmentnoteses?$select=nha_schoolenrollmentnotesid,nha_name,createdon,nha_notefield,nha_enrollmentcapacitystatus&$filter=(_nha_schoolenrollmentcapacity_value eq '+currentSchoolCapacity+')&$orderby=createdon desc').then(response=>response.json()).then(data=>{
-    //update notes section
-    ShowNotes(data);
-    })
+function GetNotes(notes){
+    if(notes==null|| undefined){
+          //uses currentSchoolCapacity
+        fetch('/api/data/v9.2/nha_schoolenrollmentnoteses?$select=nha_schoolenrollmentnotesid,nha_name,createdon,nha_notefield,nha_enrollmentcapacitystatus&$filter=(_nha_schoolenrollmentcapacity_value eq '+currentSchoolCapacity+')&$orderby=createdon desc').then(response=>response.json()).then(data=>{
+        //update notes section
+        ShowNotes(data);
+        })
+    }
+    else{
+        ShowNotes(notes);
+    }
+  
  
 }
 function FillSchoolChoices(data){
@@ -80,7 +92,6 @@ function FillSchoolChoices(data){
     UpdatedSelectedSchool(); 
 }
 function FillYearChoices(data){
-    debugger;
     data.forEach(function(year){
         //check against current
         if(year.statuscode===126990001){
@@ -95,7 +106,6 @@ function FillYearChoices(data){
        
     });
     UpdatedSelectedYear();
-    //UpdateYearColumns();
 }
 function UpdateSchoolCapacityValues(data){
     //update fields
@@ -121,23 +131,21 @@ function UpdateSchoolCapacityValues(data){
    
 }
 function ShowNotes(data){
-    data[0].value.forEach(function(note){
+    data.forEach(function(note){
         $('#notes').append('<div id='+note.nha_schoolenrollmentnotesid+'><p>'+note.nha_name+'</p><p>'+note.createdon+'</p><p>'+note.nha_enrollmentcapacitystatus+'</p><p>'+note.nha_notefield+'</p></div>');
     });
 }
 function UpdatedSelectedSchool(){
-    debugger;
     let selectedSchool = $('#school option:selected');
     SetSchoolId(selectedSchool.id);
     SetSchoolName(selectedSchool.val()); 
     
      //await to have both and then get grade capacities
-    GetSelectedCapacity()
-    GetLastYearCapacity();
-    UpdateSchoolInfo();
+    //GetSelectedCapacity()
+    //GetLastYearCapacity();
+    UpdateSchoolNameDisplay();
 }
 function UpdatedSelectedYear(){
-    debugger;
     let selectedYear = $('#academicYear option:selected');
 
     SetYearId(selectedYear.id);
@@ -145,8 +153,8 @@ function UpdatedSelectedYear(){
 
     //get prior year school enrollment capacity
     //await to have both and then get grade capacities
-    GetSelectedCapacity();
-    GetLastYearCapacity();
+    //GetSelectedCapacity();
+    //GetLastYearCapacity();
     UpdateYearColumns();
   
 }
@@ -179,15 +187,11 @@ function SetCurrentYear(currentYearValue){
 function SetPastYear(){
     pastYear= currentYear-1;
 }
-function SetSchool(){
-
-}
-
 function UpdateYearColumns(){
     $('.priorYear').html(pastYear);
     $('.currentYear').html(currentYear); 
 }
-function UpdateSchoolInfo(){
+function UpdateSchoolNameDisplay(){
     $('.schoolName').html(schoolName);
 }
 function UpdateStatus(){
@@ -235,12 +239,13 @@ function DisplayProposedCapacities(data){
 
     allGradeCapacities.sort(Gradecompare);
     allGradeCapacities.forEach(function(capacity){
-        $('.gradeRows').append("<tr class='rowBody' id="+capacity.gradeCapacityId+"><td id=grade"+capacity.nha_grade+">"+capacity.parsedGrade+"<td>"+capacity.pyRooms+"</td><td id='roomDiff' contenteditable=true>"+capacity.nha_roomdifference+"</td><td id='rooms_"+capacity.nha_grade+"'>"+capacity.nha_rooms+"</td><td>"+capacity.pyOfferedCapacity+"</td><td>"+capacity.pyCountDay+"</td><td>"+capacity.nha_newstudentsneeded+"</td><td contenteditable>"+capacity.nha_offeredcapacity+"</td><td>"+capacity.nha_studentsperroom+"</td><td>"+capacity.nha_expectedcapacity+"</td><td>"+capacity.nha_enrollmentgoals+"</td></tr>");
+        $('.gradeRows').append("<tr class='rowBody' id="+capacity.gradeCapacityId+"><td id=grade"+capacity.nha_grade+">"+capacity.parsedGrade+"<td>"+capacity.pyRooms+"</td><td class='roomDiff' contenteditable=true>"+capacity.nha_roomdifference+"</td><td id='rooms_"+capacity.gradeCapacityId+"'>"+capacity.nha_rooms+"</td><td>"+capacity.pyOfferedCapacity+"</td><td>"+capacity.pyCountDay+"</td><td>"+capacity.nha_newstudentsneeded+"</td><td id=offeredcapacity_"+capacity.gradeCapacityId+" contenteditable>"+capacity.nha_offeredcapacity+"</td><td>"+capacity.nha_studentsperroom+"</td><td>"+capacity.nha_expectedcapacity+"</td><td>"+capacity.nha_enrollmentgoals+"</td></tr>");
     });
 
 }
-function UpdateRoom(inputRow){
-    //id of tr
+function UpdateRoom(eventtrigger){
+
+    let inputRow= eventtrigger.currentTarget;
     let originalRoomVal = inputRow.nextSibling.innerHTML;
     let roomCell = inputRow.nextSibling.id;
 
@@ -277,20 +282,26 @@ function userSubmit(event){
   
 }
 function updateSEC(){
-    /*
-    $('#nha_instructionroomsavailable').val();
-    $('#nha_enrollmentmaximum').val();
-
-    let values= {
-        nha_instructionroomsavailable= $('#nha_instructionroomsavailable').val(),
-        nha_enrollmentmaximum =     $('#nha_enrollmentmaximum').val()
+    debugger;
+    $('.gradeRows');
+    //go through each tr and get id 
+        //go through each td to get room,room diff and offered capacity values
+    //updates values on SEC
+    let SEC_values= {
+        "nha_instructionroomsavailable": $('#nha_instructionroomsavailable').val(),
+        "nha_enrollmentmaximum" :  $('#nha_enrollmentmaximum').val()
     }
-    fetch('/api/v9.2/nha_schoolenrollmentcapacities('+currentSchoolCapacity+'','post'=>{
-        body: values,
-        headers:
-        contenttype
-
+    /*
+    fetch('/api/v9.2/nha_schoolenrollmentcapacities('+currentSchoolCapacity+'',{
+        method:'POST',
+        body:JSON.stringify(SEC_values),
+        headers:"",
+        accept: "json"
     });*/
+
+
+    //get grade level capacities 
+
 }
 function sendValues(){
 
@@ -340,7 +351,7 @@ function UpdateLookupFields(){
 
     statusReason= schoolCapacity.statuscode;
 
-    UpdateSchoolInfo();
+    UpdateSchoolNameDisplay();
     UpdateYearColumns();
     UpdateStatus();
 }

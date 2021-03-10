@@ -239,7 +239,7 @@ function DisplayProposedCapacities(data){
 
     allGradeCapacities.sort(Gradecompare);
     allGradeCapacities.forEach(function(capacity){
-        $('.gradeRows').append("<tr class='rowBody' id="+capacity.gradeCapacityId+"><td id=grade"+capacity.nha_grade+">"+capacity.parsedGrade+"<td>"+capacity.pyRooms+"</td><td class='roomDiff' contenteditable=true>"+capacity.nha_roomdifference+"</td><td id='rooms_"+capacity.gradeCapacityId+"'>"+capacity.nha_rooms+"</td><td>"+capacity.pyOfferedCapacity+"</td><td>"+capacity.pyCountDay+"</td><td>"+capacity.nha_newstudentsneeded+"</td><td id=offeredcapacity_"+capacity.gradeCapacityId+" contenteditable>"+capacity.nha_offeredcapacity+"</td><td>"+capacity.nha_studentsperroom+"</td><td>"+capacity.nha_expectedcapacity+"</td><td>"+capacity.nha_enrollmentgoals+"</td></tr>");
+        $('.gradeRows').append("<tr class='rowBody' id="+capacity.gradeCapacityId+"><td id=grade"+capacity.nha_grade+">"+capacity.parsedGrade+"<td>"+capacity.pyRooms+"</td><td id=roomDiff_"+capacity.gradeCapacityId+" class='roomDiff' contenteditable=true>"+capacity.nha_roomdifference+"</td><td id='rooms_"+capacity.gradeCapacityId+"'>"+capacity.nha_rooms+"</td><td>"+capacity.pyOfferedCapacity+"</td><td>"+capacity.pyCountDay+"</td><td>"+capacity.nha_newstudentsneeded+"</td><td id=offeredcapacity_"+capacity.gradeCapacityId+" contenteditable>"+capacity.nha_offeredcapacity+"</td><td>"+capacity.nha_studentsperroom+"</td><td>"+capacity.nha_expectedcapacity+"</td><td>"+capacity.nha_enrollmentgoals+"</td></tr>");
     });
 
 }
@@ -273,17 +273,34 @@ function GetGradeValue(nha_grade){
   }
 
 }
-function userSubmit(event){
-    event.preventDefault();
-    //get every grade level capacity room and room diff and offered capacity
-    //get values of total rooms avail for instruction
-    //get enrollment max
-    //send updates for each glc, and sec
-  
+function SaveData(event){
+    UpdateData();  
 }
-function updateSEC(){
-    debugger;
-    $('.gradeRows');
+function UpdateData(){
+    let gradeTable = $('.gradeRows');
+    let gradeRows = gradeTable[0].children; 
+    let gradeUpdates = [];
+    for(var i = 0;i<gradeRows.length;i++){
+        let grade = {};
+        //get grade capacity id of row/ id is set to current year capacity
+        let gradeid= gradeRows[i].id;
+
+        //get value of room, room difference, and offered capacity with unique id of each value
+        let gradeRoom = $('#rooms_'+gradeid);
+        let gradeRoomDiff = $('#roomDiff_'+gradeid);
+        let offeredCapacity = $('#offeredcapacity_'+gradeid);
+
+        //create an object with values
+        grade.nha_gradelevelcapacityid=gradeid;
+        grade.nha_room= gradeRoom[0].innerHTML;
+        grade.nha_roomdifference= gradeRoomDiff[0].innerHTML;
+        grade.nha_offeredcapacity = offeredCapacity[0].innerHTML; 
+
+        //add to array
+        gradeUpdates.push(grade);
+    }
+    console.log(gradeUpdates);
+
     //go through each tr and get id 
         //go through each td to get room,room diff and offered capacity values
     //updates values on SEC
@@ -291,23 +308,18 @@ function updateSEC(){
         "nha_instructionroomsavailable": $('#nha_instructionroomsavailable').val(),
         "nha_enrollmentmaximum" :  $('#nha_enrollmentmaximum').val()
     }
-    /*
+    
     fetch('/api/v9.2/nha_schoolenrollmentcapacities('+currentSchoolCapacity+'',{
         method:'POST',
         body:JSON.stringify(SEC_values),
         headers:"",
         accept: "json"
-    });*/
-
-
-    //get grade level capacities 
-
-}
-function sendValues(){
-
+    });
+    //some kind of success message
 }
 function openSEC(){
     //window .open (url of sec)
+   // Window.open('/nha_schoolenrollmentcapacities()')
 }
 function sortGrades(a,b){
     const gradeCapacityA = a.nha_grade;
@@ -326,50 +338,5 @@ function UseJSON(gradeCapacities){
     UpdateLookupFields();
     DisplayProposedCapacities(gradeCapacities);
 }
-
-/*
-function userDecision(userDecision){
-    $('#'+userDecision+'').addClass("checkedBox");
-    if(userDecision==="approve"){
-        $('#userNotes').prop('required',false);
-        
-        $("#reject").removeClass("checkedBox");
-    }
-    else if(userDecision==="reject"){
-        $('#userNotes').prop('required',true);
-        $("#approve").removeClass("checkedBox");
-
-    }
-
-}
-function UpdateLookupFields(){
-
-    pastYear= currentYear-1;
-
-    schoolid= schoolCapacity.nha_school;
-    schoolName = schoolCapacity.schoolName;
-
-    statusReason= schoolCapacity.statuscode;
-
-    UpdateSchoolNameDisplay();
-    UpdateYearColumns();
-    UpdateStatus();
-}
-function ParseParameters(){
-   const queryString =  window.location.search;
-   const urlParams = new URLSearchParams(queryString);
-   const schoolCapacity = urlParams.get('currentSchoolCapacity');
-   if(schoolCapacity!==null){
-       currentSchoolCapacity = schoolCapacity.toLowerCase();
-   }
-   else{
-       currentSchoolCapacity="f06fec29-c052-eb11-a812-000d3a58f033";
-       lastSchoolCapacity="5cd9c85d-d756-eb11-a812-000d3a3479c5";
-   }
-
-   
-}
-
-*/
 
 

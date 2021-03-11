@@ -106,7 +106,7 @@ function GetGradeCapacities(){
 }
 function ShowSchoolChoices(data){
     data.forEach(function(school){
-        $('#school').append('<option value="'+school.nha_name+'" id="'+school.nha_schoolid+'">'+school.nha_name+'</opiton>');
+        $('#school').append('<option class="dropdown-item" value="'+school.nha_name+'" id="'+school.nha_schoolid+'">'+school.nha_name+'</opiton>');
     })
     UpdatedSelectedSchool(); 
 }
@@ -156,7 +156,7 @@ function ShowProposedCapacities(data){
 }
 function ShowNotes(data){
     data.forEach(function(note){
-        $('#notes').append('<div id='+note.nha_schoolenrollmentnotesid+'><p>'+note.nha_name+'</p><p>'+note.createdon+'</p><p>'+note.nha_enrollmentcapacitystatus+'</p><p>'+note.nha_notefield+'</p></div>');
+        $('#notes').append('<div class=list-group-item id='+note.nha_schoolenrollmentnotesid+'><p class=mb-1>'+note.nha_name+'</p><p class=mb-1>'+note.createdon+'</p><p>'+note.nha_enrollmentcapacitystatus+'</p><p>'+note.nha_notefield+'</p></div>');
     });
 }
 function ShowSchoolCapacityValues(data){
@@ -215,6 +215,17 @@ function UpdateSchoolNameDisplay(){
 function UpdateStatus(){
     //looks against values in optionSets.js
     var status = schoolCapacityStatus.filter(status => status.value === statusReason);
+   schoolCapacityStatus.forEach(statusR=>{
+       if(statusR.value===statusReason){
+        $('#statusReason').append('<option value='+statusR.value+' id='+statusR.value+' default>'+statusR.status+'</option>');
+       }
+       else{
+        $('#statusReason').append('<option value='+statusR.value+' id='+statusR.value+' >'+statusR.status+'</option>');
+       }
+      
+   });
+
+
     if(status.length===1){
         $('.statusReason').append(status[0].status);
 

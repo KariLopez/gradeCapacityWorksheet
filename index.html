@@ -28,17 +28,21 @@
         </header>
         <section class="schoolCapacity">
             <form id=schoolCapacitySelection>
-                <select id="school" name="School" onChange="UpdatedSelectedSchool()"></select>
-                <select id="academicYear" name="Academic Year" onChange="UpdatedSelectedYear()"></select>
+                <select id="school" name="School" class="btn btn-secondary dropdown-toggle" onChange="UpdatedSelectedSchool()"></select>
+                <select id="academicYear" name="Academic Year"  class="btn btn-secondary dropdown-toggle" onChange="UpdatedSelectedYear()"></select>
                 <!--status progression?-->
-                <select id="statusReason" name="Status Reason"></select>
+                <select id="statusReason" name="Status Reason" class="btn btn-secondary dropdown-toggle"></select>
             </form>
           
-            <form>
-                <label for="nha_instructionroomsavailable">Total Rooms available for instuction</label>
-                <input type="text" id="nha_instructionroomsavailable">
+            <form class="input">
+                <div class="input-group">
+                <label  for="nha_instructionroomsavailable">Total Rooms available for instuction</label>
+                <input class="form-control" type="text" id="nha_instructionroomsavailable">
+                </div>
+                <div class="input-group">
                 <label for="nha_enrollmentmaximum">Enrollment Max</label>
-                <input type="text" id="nha_enrollmentmaximum">
+                <input class="form-control" type="text" id="nha_enrollmentmaximum">
+            </div>
             </form>
             <div class="readOnly">
            <section id="schoolCapacityReadOnly">
@@ -56,7 +60,7 @@
         </div>
         </section>
         <section class="gradeCapacities">
-            <table class="gradeCapacityTable">
+            <table class="gradeCapacityTable table table-striped">
                 <thead>
                     <tr class=tableHeaderRow>
                         <th>Grade</th>
@@ -75,7 +79,7 @@
                 <tbody class="gradeRows"></tbody>
             </table>
         </section>
-        <section id="notes">
+        <section id="notes" class="list-group">
         </section>
     </div>
 </body>

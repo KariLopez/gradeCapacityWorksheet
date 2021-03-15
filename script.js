@@ -201,6 +201,7 @@ function UpdateSchoolNameDisplay(){
 function UpdateStatus(){
     //looks against values in optionSets.js
     var status = schoolCapacityStatus.filter(status => status.value === statusReason);
+    //remove children
     $('#statusReason').empty();
    schoolCapacityStatus.forEach(statusR=>{
        if(statusR.value===statusReason){
@@ -211,6 +212,7 @@ function UpdateStatus(){
        }     
    });
     if(status.length===1){
+        //replaces html text 
         $('.statusReason').html(status[0].status);
 
     }

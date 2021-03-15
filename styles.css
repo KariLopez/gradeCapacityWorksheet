@@ -1,9 +1,32 @@
+
 header{
     margin: auto;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    flex-direction: row;
+    justify-content: flex-end;
     text-align: center;
+    
+}
+header>.userActions{
+    margin: 10px;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    color: #00aeef;
+    border-color: #00aeef;
 }
 label{
     font-weight: 400;
@@ -21,24 +44,29 @@ label{
 td[contenteditable]{
     border: 4px dotted black;
 }
-.body{
-    margin:4px;
-}
 .checkedBox{
     box-shadow: 4px 4px 20px grey;
 }
 .content{
-    margin: 100px;
+    margin:100px;
+    color: #00539f;
+}
+.gradeCapacities{
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 .gradeCapacityTable{
-      margin: 30px;
-      text-align: center;
-  }
-  .input{
-      display: flex;
-  }
+      text-align: center; 
+}
+.input{
+    display: flex;
+    margin:10px;
+}
 .hidden{
     display:none;
+}
+.readOnly{
+    margin:10px;
 }
 .rowBody{
     border-bottom-width: 1px;
@@ -70,6 +98,12 @@ tableHeaderRow>th{
     border-color: #218838;
     background-color:#218838 ;
 }
+#schoolCapacitySelection>*{
+    margin:10px;
+    background-color: #8e9697;
+    border: #8e9697;
+    
+}
 #schoolCapacityReadOnly{
     display: flex;
     justify-content: space-around;
@@ -83,6 +117,12 @@ tableHeaderRow>th{
 }
 #schoolCapacityReadOnlyLabels>div{
     padding:4px;
+}
+#title{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin:10px;
 }
 #notes{
     display: flex;

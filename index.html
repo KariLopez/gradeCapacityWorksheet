@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title></title>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
+    <title>Grade Capacities Worksheeet</title>
     <link href="styles.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script type="text/javascript" src="gradeCapacities.json"></script>
     <script type="text/javascript" src="schoolCapacity.json"></script>
@@ -18,46 +16,45 @@
     <script src="optionSets.js"></script>
     <script src="script.js"></script>
 </head>
-<body>
-    <button type="button" class="btn btn-outline-success" onClick="SaveData()">Save</button>
-    <button type="button" class="btn btn-outline-info" onClick="openSEC()">View School EnrollmentCapacity</button>
-    <div class="content">
+<body class="content">
         <header>
-            <h1><span class="schoolName"> </span> Grade Level Capacities</h1>
-            <h2 id="status">Status: <span class="statusReason"></span></h2>
+            <button type="button" class="userActions" title="Save Changes" onClick="SaveData()"><span class="material-icons">save</span></button>
+            <button type="button" class="userActions" title="View School Enrollment Capacity"  onClick="openSEC()"><span class="material-icons">view_compact</span></button>  
         </header>
         <section class="schoolCapacity">
             <form id=schoolCapacitySelection>
                 <select id="school" name="School" class="btn btn-secondary dropdown-toggle" onChange="UpdatedSelectedSchool()"></select>
                 <select id="academicYear" name="Academic Year"  class="btn btn-secondary dropdown-toggle" onChange="UpdatedSelectedYear()"></select>
-                <!--status progression?-->
-                <select id="statusReason" name="Status Reason" class="btn btn-secondary dropdown-toggle"></select>
+                <select id="statusReason" name="Status Reason" class="btn btn-secondary dropdown-toggle" disabled></select>
             </form>
-          
+            <section id="title">
+                <h1><span class="schoolName"> </span> Grade Level Capacities</h1>
+                <h2 id="status">Status: <span class="statusReason"></span></h2>
+            </section>
             <form class="input">
                 <div class="input-group">
-                <label  for="nha_instructionroomsavailable">Total Rooms available for instuction</label>
-                <input class="form-control" type="text" id="nha_instructionroomsavailable">
+                    <label  for="nha_instructionroomsavailable">Total Rooms available for instuction</label>
+                    <input class="form-control" type="text" id="nha_instructionroomsavailable">
                 </div>
                 <div class="input-group">
-                <label for="nha_enrollmentmaximum">Enrollment Max</label>
-                <input class="form-control" type="text" id="nha_enrollmentmaximum">
-            </div>
+                    <label for="nha_enrollmentmaximum">Enrollment Max</label>
+                    <input class="form-control" type="text" id="nha_enrollmentmaximum">
+                </div>
             </form>
             <div class="readOnly">
-           <section id="schoolCapacityReadOnly">
-               <div id="nha_roomtotal"></div>
-               <div id="nha_enrollmentgoalstotal"></div>
-               <div id="nha_expectedcapacitytotal"></div>
-               <div id="nha_percentageexpected"></div>
-            </section>
-            <section id="schoolCapacityReadOnlyLabels">
-                <div id="roomTotal">Room Total</div>
-                <div id="enrollmentGoal">Enrollment Goal total</div>
-                <div id="expectedCapacity"> Expected Capacity Total</div>
-                <div id="percentExpected">% Expected</div>
-            </section>
-        </div>
+                <section id="schoolCapacityReadOnly">
+                    <div id="nha_roomtotal"></div>
+                    <div id="nha_enrollmentgoalstotal"></div>
+                    <div id="nha_expectedcapacitytotal"></div>
+                    <div id="nha_percentageexpected"></div>
+                </section>
+                <section id="schoolCapacityReadOnlyLabels">
+                    <div id="roomTotal">Room Total</div>
+                    <div id="enrollmentGoal">Enrollment Goal total</div>
+                    <div id="expectedCapacity"> Expected Capacity Total</div>
+                    <div id="percentExpected">% Expected</div>
+                </section>
+            </div>
         </section>
         <section class="gradeCapacities">
             <table class="gradeCapacityTable table table-striped">
@@ -81,6 +78,5 @@
         </section>
         <section id="notes" class="list-group">
         </section>
-    </div>
 </body>
 </html>

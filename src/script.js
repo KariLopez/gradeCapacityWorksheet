@@ -11,7 +11,6 @@ let apiURL= "https://enrollmentcapacityapi.azurewebsites.net";
 let testing = false;
 
 $(document).ready(function (){
-    //testing
     if(testing){
         GetSchools(schools);
         GetAcademicYears(years);
@@ -32,29 +31,42 @@ $(document).ready(function (){
 function GetSchools(schools){
     let schoolData;
     if(schools==null||undefined){
-        fetch(apiURL+'/api/School/Schools').then(response=>response.json()).then(data=>{
-            schoolData= data;
+     fetch(apiURL+'/api/School/Schools',{
+           headers:{
+           'Content-Type':'application/json; charset=utf-8'
+        }
+        }).then(response => response.json()).then(data=>ShowSchoolChoices(data))
+        .catch(function(e){
+            console.log(e);
         });
     }
     else{
         schoolData=schools;
+        ShowSchoolChoices(schoolData)
+
     }
-    ShowSchoolChoices(schoolData)
+    //ShowSchoolChoices(schoolData)
 }
 function GetAcademicYears(years){
     let yearData = years;
     if(yearData==null|| undefined){
-        fetch(apiURL+'/api/Year/Years').then(response=>response.json()).then(data=>{
+        fetch(apiURL+'/api/Year/Years',{
+        }).then(response=>response.json()).then(data=>{
             yearData= data; 
+            ShowYearChoices(yearData);
         });
     }
-    ShowYearChoices(yearData);
+    else{
+        ShowYearChoices(yearData);
+    }
+   
    
 
 }
 function GetSelectedCapacity(schoolCapacity){
     if(schoolCapacity==null||undefined){
-        fetch(apiURL+'/api/Capacity/GetSchoolCapacity?schoolid='+schoolid+'&academicyearid='+yearid).then(response=>response.json()).then(data=>{
+        fetch(apiURL+'/api/Capacity/GetSchoolCapacity?schoolid='+schoolid+'&academicyearid='+yearid,{
+        }).then(response=>response.json()).then(data=>{
             ShowSchoolCapacityValues(data);
         });
     }
@@ -64,7 +76,9 @@ function GetSelectedCapacity(schoolCapacity){
 }
 function GetNotes(notes){
     if(notes==null|| undefined){
-          fetch(apiURL+'/api/Note/SchoolCapacityNotes?schoolid='+schoolid+'&yearid='+yearid).then(response=>response.json()).then(data=>{
+          fetch(apiURL+'/api/Note/SchoolCapacityNotes?schoolid='+schoolid+'&yearid='+yearid,{
+
+          }).then(response=>response.json()).then(data=>{
             ShowNotes(data);
 
           });
@@ -76,7 +90,9 @@ function GetNotes(notes){
 
 function GetGradeCapacities(gradeCapacities){
     if(gradeCapacities===null||gradeCapacities===undefined){
-        fetch(apiURL+'/api/GradeCapacity/GradeCapacities?schoolid='+schoolid+'&academicyearid='+yearid+'&pastacademicyearid='+pastYear).then(response=>response.json()).then(data=>{
+        fetch(apiURL+'/api/GradeCapacity/GradeCapacities?schoolid='+schoolid+'&academicyearid='+yearid+'&pastacademicyearid='+pastYear,{
+
+        }).then(response=>response.json()).then(data=>{
             ShowProposedCapacities(data);
         });
     }

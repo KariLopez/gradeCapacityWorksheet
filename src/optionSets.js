@@ -1,4 +1,4 @@
-let schoolCapacityStatus=[
+export let schoolCapacityStatus=[
     {
         status:"Principal Review Needed",
         value:126990007
@@ -57,7 +57,7 @@ let schoolCapacityStatus=[
     }
 ];
 
- let gradeLevels=[
+export let gradeLevels=[
     {
         value:1,
          name: "Kindergarten",
@@ -129,5 +129,6 @@ let schoolCapacityStatus=[
         displayOrder: 0
     }
 ];
+
 
 

@@ -1,3 +1,4 @@
+
 let schoolid;
 let schoolName;
 let yearid;
@@ -337,8 +338,8 @@ function SaveData(){
     })
 }
 function openSEC(){
-    //window .open (url of sec)
-   // Window.open('/nha_schoolenrollmentcapacities()')
+    window.open('/main.aspx?etn=nha_schoolenrollmentcapacities&pagetype=entityrecord&id='+currentSchoolCapacity, "newWindow", null);
+
 }
 function sortGrades(a,b){
     const gradeCapacityA = a.nha_grade;

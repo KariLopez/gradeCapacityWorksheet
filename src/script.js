@@ -8,7 +8,7 @@ let lastSchoolCapacity;
 let statusReason;
 let currentAcademicYearStatus= 126990001;
 let apiURL= "https://enrollmentcapacityapi.azurewebsites.net";
-let testing = true;
+let testing = false;
 
 $(document).ready(function (){
     //testing

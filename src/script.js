@@ -1,11 +1,12 @@
+import {schoolCapacityStatus ,gradeLevels} from './optionSets.js';
 
 let schoolid;
 let schoolName;
 let yearid;
+let pastyearid;
 let pastYear;
 let currentYear;
 let currentSchoolCapacity; 
-let lastSchoolCapacity;
 let statusReason;
 let currentAcademicYearStatus= 126990001;
 let apiURL= "https://enrollmentcapacityapi.azurewebsites.net";
@@ -28,15 +29,35 @@ $(document).ready(function (){
             UpdateRoom(e);
         })
     }
+    var saveFunction = document.getElementById('save');
+    saveFunction.addEventListener('click',function(e) {
+        SaveData();
+    })
+    var openEntity = document.getElementById('openEntity');
+    openEntity.addEventListener('click',function(e){
+        openSEC();
+    })
+
+    var acadyear= document.getElementById('academicYear');
+    acadyear.addEventListener('change',function(e){
+        UpdatedSelectedYear();
+    });
+
+    let schoolSelect = document.getElementById('school');
+    schoolSelect.addEventListener('change',function(e){
+        UpdatedSelectedSchool();
+    })
 });
-function GetSchools(schools){
+ function GetSchools(schools){
     let schoolData;
     if(schools==null||undefined){
      fetch(apiURL+'/api/School/Schools',{
            headers:{
            'Content-Type':'application/json; charset=utf-8'
         }
-        }).then(response => response.json()).then(data=>ShowSchoolChoices(data))
+        }).then(response => response.json()).then(data=>{
+            ShowSchoolChoices(data)}
+        )
         .catch(function(e){
             console.log(e);
         });
@@ -46,9 +67,9 @@ function GetSchools(schools){
         ShowSchoolChoices(schoolData)
 
     }
-    //ShowSchoolChoices(schoolData)
+
 }
-function GetAcademicYears(years){
+ function GetAcademicYears(years){
     let yearData = years;
     if(yearData==null|| undefined){
         fetch(apiURL+'/api/Year/Years',{
@@ -64,22 +85,25 @@ function GetAcademicYears(years){
    
 
 }
-function GetSelectedCapacity(schoolCapacity){
+ function GetSelectedCapacity(schoolCapacity){
     if(schoolCapacity==null||undefined){
         fetch(apiURL+'/api/Capacity/GetSchoolCapacity?schoolid='+schoolid+'&academicyearid='+yearid,{
         }).then(response=>response.json()).then(data=>{
             ShowSchoolCapacityValues(data);
+            GetGradeCapacities();
+            GetNotes();
         });
     }
     else{
         ShowSchoolCapacityValues(schoolCapacity);       
     } 
 }
-function GetNotes(notes){
+ function GetNotes(notes){
     if(notes==null|| undefined){
           fetch(apiURL+'/api/Note/SchoolCapacityNotes?schoolid='+schoolid+'&yearid='+yearid,{
 
           }).then(response=>response.json()).then(data=>{
+              debugger;
             ShowNotes(data);
 
           });
@@ -89,9 +113,9 @@ function GetNotes(notes){
     }
 }
 
-function GetGradeCapacities(gradeCapacities){
+ function GetGradeCapacities(gradeCapacities){
     if(gradeCapacities===null||gradeCapacities===undefined){
-        fetch(apiURL+'/api/GradeCapacity/GradeCapacities?schoolid='+schoolid+'&academicyearid='+yearid+'&pastacademicyearid='+pastYear,{
+        fetch(apiURL+'/api/GradeCapacity/GradeCapacities?schoolid='+schoolid+'&academicyearid='+yearid+'&pastacademicyearid='+pastyearid,{
 
         }).then(response=>response.json()).then(data=>{
             ShowProposedCapacities(data);
@@ -103,13 +127,13 @@ function GetGradeCapacities(gradeCapacities){
  
     
 }
-function ShowSchoolChoices(data){
+ function ShowSchoolChoices(data){
     data.forEach(function(school){
         $('#school').append('<option class="dropdown-item" value="'+school.nha_name+'" id="'+school.nha_schoolid+'">'+school.nha_name+'</opiton>');
     });
     UpdatedSelectedSchool(); 
 }
-function ShowYearChoices(data){
+ function ShowYearChoices(data){
     data.forEach(function(year){
         if(year.statuscode===currentAcademicYearStatus){
             $('#academicYear').append('<option value="'+year.nha_value+'" id="'+year.nha_academicyearid+'" default>'+ year.nha_name+'</option>');
@@ -120,15 +144,15 @@ function ShowYearChoices(data){
     });
     UpdatedSelectedYear();
 }
-function ShowProposedCapacities(data){
+ function ShowProposedCapacities(data){
     let gradeCapacities = data;
     let currentGradeCapacities = gradeCapacities.filter(capacity=>capacity.nha_schoolenrollmentcapacity===currentSchoolCapacity).sort(sortGrades);
-    let pastGradeCapacities = gradeCapacities.filter(capacity=>capacity.nha_schoolenrollmentcapacity===lastSchoolCapacity).sort(sortGrades);
+    let pastGradeCapacities = gradeCapacities.filter(capacity=>capacity.nha_schoolenrollmentcapacity!==currentSchoolCapacity).sort(sortGrades);
     
     let allGradeCapacities = currentGradeCapacities.map(function(cyCapacity){
        let lastYearGradeValues = pastGradeCapacities.filter(pyCapacity=>pyCapacity.nha_grade===cyCapacity.nha_grade);
+       let condensedRow = cyCapacity;
        if(lastYearGradeValues.length!==0){
-            let condensedRow = cyCapacity;
             condensedRow.pyRooms = lastYearGradeValues[0].nha_rooms;
             condensedRow.pyOfferedCapacity=lastYearGradeValues[0].nha_offeredcapacity;
             condensedRow.pyCountDay=lastYearGradeValues[0].nha_countdaystudents;
@@ -153,13 +177,13 @@ function ShowProposedCapacities(data){
     });
 
 }
-function ShowNotes(data){
+ function ShowNotes(data){
     $('#notes').empty();
     data.forEach(function(note){
         $('#notes').append('<div class=list-group-item id='+note.nha_schoolenrollmentnotesid+'><p class=mb-1>'+note.nha_name+'</p><p class=mb-1>'+note.createdon+'</p><p>'+note.nha_enrollmentcapacitystatus+'</p><p>'+note.nha_notefield+'</p></div>');
     });
 }
-function ShowSchoolCapacityValues(data){
+ function ShowSchoolCapacityValues(data){
     //update fields
    // if(data[0].value.count==1){}
 
@@ -167,7 +191,7 @@ function ShowSchoolCapacityValues(data){
 
     statusReason= sec.statuscode;
     currentSchoolCapacity= sec.nha_schoolenrollmentcapacityid; 
-    UpdateStatus();
+    
 
         $('#nha_enrollmentmaximum').val(sec.nha_enrollmentmaximum);
         $('#nha_instructionroomsavailable').val(sec.nha_instructionroomsavailable);
@@ -177,25 +201,28 @@ function ShowSchoolCapacityValues(data){
         $('#nha_enrollmentgoalstotal').html(sec.nha_enrollmentgoalstotal);
         $('#nha_expectedcapacitytotal').html(sec.nha_expectedcapacitytotal);
         $('#nha_percentageexpected').html( sec.nha_percentageexpected);    
+        UpdateStatus();
 }
-function UpdatedSelectedSchool(){
-    let selectedSchool = $('#school option:selected');
-    SetSchoolId(selectedSchool.id);
-    SetSchoolName(selectedSchool.val()); 
+ function UpdatedSelectedSchool(){
+    let selectedSchoolElement = $('#school option:selected');
+    SetSchoolId(selectedSchoolElement);
+    SetSchoolName(selectedSchoolElement); 
     
     UpdateSchoolNameDisplay();
     userSelection();
 }
-function UpdatedSelectedYear(){
-    let selectedYear = $('#academicYear option:selected');
+ function UpdatedSelectedYear(){
+    let selectedYearElement = $('#academicYear option:selected');
+    
 
-    SetYearId(selectedYear.id);
-    SetCurrentYear(selectedYear.val());
+    SetYearId(selectedYearElement);
+    SetCurrentYear(selectedYearElement);
+
 
     UpdateYearColumns();
     userSelection();
 }
-function userSelection(){
+ function userSelection(){
     if(testing){
         GetSelectedCapacity(schoolCapacity);
         GetNotes(notes);
@@ -203,26 +230,24 @@ function userSelection(){
     }
     else{
         GetSelectedCapacity();
-        GetNotes();
-        GetGradeCapacities();
     }
    
 }
-function UpdateYearColumns(){
+ function UpdateYearColumns(){
     $('.priorYear').html(pastYear);
     $('.currentYear').html(currentYear); 
 }
-function UpdateSchoolNameDisplay(){
+ function UpdateSchoolNameDisplay(){
     $('.schoolName').html(schoolName);
 }
-function UpdateStatus(){
+ function UpdateStatus(){
     //looks against values in optionSets.js
     var status = schoolCapacityStatus.filter(status => status.value === statusReason);
     //remove children
     $('#statusReason').empty();
    schoolCapacityStatus.forEach(statusR=>{
        if(statusR.value===statusReason){
-        $('#statusReason').append('<option value='+statusR.value+' id='+statusR.value+' default>'+statusR.status+'</option>');
+        $('#statusReason').append('<option value='+statusR.value+' id='+statusR.value+' selected>'+statusR.status+'</option>');
        }
        else{
         $('#statusReason').append('<option value='+statusR.value+' id='+statusR.value+' >'+statusR.status+'</option>');
@@ -237,7 +262,7 @@ function UpdateStatus(){
         $('.statusReason').html(statusReason);
     }  
 }
-function UpdateRoom(eventtrigger){
+ function UpdateRoom(eventtrigger){
     let inputRow= eventtrigger.currentTarget;
     let originalRoomVal = inputRow.nextSibling.innerHTML;
     let roomCell = inputRow.nextSibling.id;
@@ -248,28 +273,33 @@ function UpdateRoom(eventtrigger){
     let newRoomVal = parseInt(pyRoomCell)+parseInt(roomDiff);
     $('#'+roomCell+'').html(newRoomVal);  
 }
-function SetSchoolName(name){
-    schoolName = name;
+ function SetSchoolName(selectedSchoolElement){
+    schoolName = selectedSchoolElement.val();
 }
-function SetSchoolId(nha_schoolid){
-    schoolid = nha_schoolid;
+ function SetSchoolId(selectedSchoolElement){
+    schoolid = selectedSchoolElement[0].id;
 }
-function SetYearId(year){
-    yearid = year; 
+ function SetYearId(yearElement){
+    yearid = yearElement[0].id; 
 }
-function SetCurrentYear(currentYearValue){
-    currentYear = currentYearValue; 
+ function SetCurrentYear(currentYearElement){
+    currentYear = currentYearElement.val(); 
     SetPastYear();
+    SetPriorYearId(currentYearElement[0].previousElementSibling);
 }
-function SetPastYear(){
+ function SetPastYear(){
     pastYear= currentYear-1;
+   
 }
-function Gradecompare(a, b) {
+function SetPriorYearId(previousElementSibling){
+    pastyearid = previousElementSibling.id;
+}
+ function Gradecompare(a, b) {
     let gradeValue_a = gradeLevels.filter(grade => grade.value === a.nha_grade);
     let gradeValue_b = gradeLevels.filter(grade => grade.value === b.nha_grade);
     return gradeValue_a[0].displayOrder - gradeValue_b[0].displayOrder; 
 }
-function FindGradeValue(nha_grade){
+ function FindGradeValue(nha_grade){
   //grade level option set
   let gradeValue = gradeLevels.filter(grade=>grade.value===nha_grade);
   if(gradeValue.length===1){
@@ -279,7 +309,7 @@ function FindGradeValue(nha_grade){
       return nha_grade;
   }
 }
-function SaveData(){
+ function SaveData(){
     let gradeTable = $('.gradeRows');
     let gradeRows = gradeTable[0].children; 
     let gradeUpdates = [];
@@ -337,11 +367,11 @@ function SaveData(){
         }
     })
 }
-function openSEC(){
-    window.open('/main.aspx?etn=nha_schoolenrollmentcapacities&pagetype=entityrecord&id='+currentSchoolCapacity, "newWindow", null);
+ function openSEC(){
+    window.open('/main.aspx?etn=nha_schoolenrollmentcapacity&pagetype=entityrecord&id='+currentSchoolCapacity, "newWindow", null);
 
 }
-function sortGrades(a,b){
+ function sortGrades(a,b){
     const gradeCapacityA = a.nha_grade;
     const gradeCapacityB = b.nha_grade;
     let comparrison = 0;

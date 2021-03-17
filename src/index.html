@@ -10,13 +10,13 @@
 </head>
 <body class="content">
         <header>
-            <button type="button" class="userActions" title="Save Changes" onClick="SaveData()"><span class="material-icons">save</span></button>
-            <button type="button" class="userActions" title="View School Enrollment Capacity"  onClick="openSEC()"><span class="material-icons">view_compact</span></button>  
+            <button type="button" class="userActions" id="save" title="Save Changes"><span class="material-icons">save</span></button>
+            <button type="button" class="userActions" id="openEntity" title="View School Enrollment Capacity"><span class="material-icons">view_compact</span></button>  
         </header>
         <section class="schoolCapacity">
             <form id=schoolCapacitySelection>
-                <select id="school" name="School" class="btn btn-secondary dropdown-toggle" onChange="UpdatedSelectedSchool()"></select>
-                <select id="academicYear" name="Academic Year"  class="btn btn-secondary dropdown-toggle" onChange="UpdatedSelectedYear()"></select>
+                <select id="school" name="School" class="btn btn-secondary dropdown-toggle"></select>
+                <select id="academicYear" name="Academic Year"  class="btn btn-secondary dropdown-toggle"></select>
                 <select id="statusReason" name="Status Reason" class="btn btn-secondary dropdown-toggle" disabled></select>
             </form>
             <section id="title">

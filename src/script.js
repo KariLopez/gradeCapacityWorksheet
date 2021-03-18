@@ -1,4 +1,4 @@
-import {schoolCapacityStatus ,gradeLevels} from './optionSets.js';
+//import {schoolCapacityStatus ,gradeLevels} from './optionSets.js';
 
 let schoolid;
 let schoolName;
@@ -10,7 +10,7 @@ let currentSchoolCapacity;
 let statusReason;
 let currentAcademicYearStatus= 126990001;
 let apiURL= "https://enrollmentcapacityapi.azurewebsites.net";
-let testing = false;
+let testing = true;
 
 $(document).ready(function (){
     if(testing){
@@ -49,6 +49,7 @@ $(document).ready(function (){
     })
 });
  function GetSchools(schools){
+
     let schoolData;
     if(schools==null||undefined){
      fetch(apiURL+'/api/School/Schools',{
@@ -173,8 +174,48 @@ $(document).ready(function (){
     $('.gradeRows').empty();
     allGradeCapacities.sort(Gradecompare);
     allGradeCapacities.forEach(function(capacity){
-        $('.gradeRows').append("<tr class='rowBody' id="+capacity.gradeCapacityId+"><td id=grade"+capacity.nha_grade+">"+capacity.parsedGrade+"<td>"+capacity.pyRooms+"</td><td id=roomDiff_"+capacity.gradeCapacityId+" class='roomDiff' contenteditable=true>"+capacity.nha_roomdifference+"</td><td id='rooms_"+capacity.gradeCapacityId+"'>"+capacity.nha_rooms+"</td><td>"+capacity.pyOfferedCapacity+"</td><td>"+capacity.pyCountDay+"</td><td>"+capacity.nha_newstudentsneeded+"</td><td id=offeredcapacity_"+capacity.gradeCapacityId+" contenteditable>"+capacity.nha_offeredcapacity+"</td><td>"+capacity.nha_studentsperroom+"</td><td>"+capacity.nha_expectedcapacity+"</td><td>"+capacity.nha_enrollmentgoals+"</td></tr>");
+        $('.gradeRows').append("<tr class='rowBody' id="+capacity.gradeCapacityId+"><td class=grade id=grade"+capacity.nha_grade+">"+capacity.parsedGrade+"<td class=pyRooms>"+capacity.pyRooms+"</td><td id=roomDiff_"+capacity.gradeCapacityId+" class='roomDiff' contenteditable=true>"+capacity.nha_roomdifference+"</td><td class=CYRooms id='rooms_"+capacity.gradeCapacityId+"'>"+capacity.nha_rooms+"</td><td class=pyCapacities>"+capacity.pyOfferedCapacity+"</td><td class=countDay>"+capacity.pyCountDay+"</td><td class=newStudents>"+capacity.nha_newstudentsneeded+"</td><td class=cyOfferedCapacity id=offeredcapacity_"+capacity.gradeCapacityId+" contenteditable>"+capacity.nha_offeredcapacity+"</td><td class=studentsPerRoom>"+capacity.nha_studentsperroom+"</td><td class=expectedCapacity>"+capacity.nha_expectedcapacity+"</td><td class=enrollmentGoals>"+capacity.nha_enrollmentgoals+"</td></tr>");
     });
+    DisplayTotals();
+}
+function DisplayTotals(){
+    let pyRooms= $('.pyRooms').toArray();
+    let roomDifference =$('.roomDiff').toArray();
+    let cyRooms=$('.CYRooms').toArray();
+    let pyCapacities = $('.pyCapacities').toArray();
+    let countDay = $('.countDay').toArray();
+    let newStudents = $('.newStudents').toArray();
+    let cyOfferedCapacity = $('.cyOfferedCapacity').toArray();
+    let studentsPerRoom = $('.studentsPerRoom').toArray();
+    let expectedCapacity = $('.expectedCapacity').toArray();
+    let enrollmentGoals = $('.enrollmentGoals').toArray();
+
+    let pyRoomTotal = GetEachRowTotal(pyRooms);
+    let roomDiffTotal = GetEachRowTotal(roomDifference);
+    let cyRoomsTotal = GetEachRowTotal(cyRooms);
+    let pyCapacitesTotal = GetEachRowTotal(pyCapacities);
+    let countDayTotal = GetEachRowTotal(countDay);
+    let newStudentsTotal = GetEachRowTotal(newStudents);
+    let cyOfferedCapacityTotal = GetEachRowTotal(cyOfferedCapacity);
+    let studentsPerRoomTotal = GetEachRowTotal(studentsPerRoom);
+    let expectedCapacityTotal = GetEachRowTotal(expectedCapacity);
+    let enrollmentGoalsTotal = GetEachRowTotal(enrollmentGoals);
+   
+    //empty prior
+    $('#totals').empty();
+    $('#totals').append("<tr><td id=PYroomTotal>0</td><td>0</td><td id=pyRooms_total>"+pyRoomTotal+"</td><td id=roomDifference_Total>"+roomDiffTotal+"</td><td id=CYroom_Total>"+cyRoomsTotal+"</td><td id=PYOfferedCapacity_Total>"+pyCapacitesTotal+"</td><td id=countDayStudents_Total>"+countDayTotal+"</td><td id=newStudentsNeeded_Total>"+newStudentsTotal+"</td><td id=CYofferedCapacities_Total>"+cyOfferedCapacityTotal+"</td><td id=studentsPerRoom_Total>"+studentsPerRoomTotal+"</td><td id=expectedCapacites_Total>"+expectedCapacityTotal+"</td><td id=enrollmentGoals_Total>"+enrollmentGoalsTotal+"</td></tr>")
+
+}
+function GetEachRowTotal(rowArray){
+    let total= 0;
+    rowArray.forEach(td=>{
+        let parsedInnerHTML = parseInt(td.innerHTML);
+        if(!isNaN(parsedInnerHTML)){
+            total+= parsedInnerHTML;
+        }
+        
+    });
+    return total; 
 
 }
  function ShowNotes(data){
